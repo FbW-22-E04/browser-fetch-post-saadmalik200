@@ -11,6 +11,7 @@ const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 const message = document.querySelector("#message");
 const button = document.querySelector(".btn");
+const checkbox = document.querySelector("#checkbox");
 
 // button.addEventListener("click", handleClick);
 
@@ -23,7 +24,6 @@ form.addEventListener(
 
 async function handleClick(e) {
   e.preventDefault();
-  const checkbox = document.querySelector("#checkbox");
 
   //   if (checkbox.checked) {
   const data = {
@@ -43,17 +43,24 @@ async function handleClick(e) {
   };
 
   try {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/posts",
-      settings
-    );
+    if (checkbox.checked) {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        settings
+      );
 
-    console.log("Reponse", response);
+      console.log("Reponse", response);
 
-    if (response.status === 201) alert("Thanks your profile has been saved");
+      if (response.status === 201) alert("Thanks your profile has been saved");
 
-    const reponseJson = await response.json();
-    console.log("ReponseJson", reponseJson);
+      const reponseJson = await response.json();
+      console.log("ReponseJson", reponseJson);
+      email.value = "";
+      name.value = "";
+      password.value = "";
+      message.value = "";
+      checkbox.checked = false;
+    }
   } catch (error) {
     console.log("Error", error.message);
   }
